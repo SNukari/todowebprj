@@ -4,8 +4,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "devStart": "nodemon index.js"
+    "test": "NODE_ENV=test mocha *.test.js",
+    "devStart": "NODE_ENV=development nodemon index.js",
+    "testStart": "NODE_ENV=test node index.js"
   },
   "keywords": [],
   "author": "",
@@ -13,8 +14,13 @@
   "description": "",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "nodemon": "^3.1.10",
     "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "chai": "^6.0.1",
+    "mocha": "^11.7.1"
   }
 }
