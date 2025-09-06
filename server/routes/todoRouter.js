@@ -1,11 +1,12 @@
-import { pool } from "../helper/db"
+import { pool } from "../helper/db.js"
 import { Router } from "express"
+import { auth } from "../helper/auth.js"
 
-const router = Router()
+const todoRouter = Router()
 
 
 
-router.get('/', (req, res) => {
+todoRouter.get('/', (req, res) => {
     
     //res.status(200).json({result: "Success"})
     pool.query('SELECT * FROM task', (error, results) => {
@@ -15,7 +16,7 @@ router.get('/', (req, res) => {
         res.status(200).json(results.rows)
 })
 })
-router.post('/create', (req, res) => {
+todoRouter.post('/create', auth, (req, res,next) => {
     
     const { task } = req.body
 
@@ -23,7 +24,7 @@ router.post('/create', (req, res) => {
         return res.status(400).json({error: 'Task is required'})
     }
 
-    pool.query('INSERT INTO task (description) VALUES ($1) returning', [task.description],
+    pool.query('INSERT INTO task (description) VALUES ($1) returning *', [task.description],
          (error, result) => {
         if(error) {
             return next (error)
@@ -32,7 +33,7 @@ router.post('/create', (req, res) => {
 })
 })
 
-router.delete('/delete/:id', (req, res) => {
+todoRouter.delete('/delete/:id', (req, res,next) => {
     
     const { id } = req.params
 
@@ -52,4 +53,4 @@ router.delete('/delete/:id', (req, res) => {
         }
     )
 })
-export default router
+export default todoRouter;
