@@ -5,7 +5,7 @@ import axios from 'axios'
 import Row from '../components/Row.jsx'
 
 
-const url = "http://localhost:5173"
+const url = "http://localhost:3001"
 
 function App() {
   const [task, setTask] = useState('')

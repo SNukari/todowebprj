@@ -1,11 +1,13 @@
 import { pool } from "../helper/db.js"
 import { Router } from "express"
 import { auth } from "../helper/auth.js"
+import { deleteTask, getTasks, postTask } from "../controllers/TaskController.js"
+//import { insertTask } from "../models/Task.js"
 
 const todoRouter = Router()
 
-
-
+todoRouter.get('/', getTasks)
+/*
 todoRouter.get('/', (req, res) => {
     
     //res.status(200).json({result: "Success"})
@@ -15,7 +17,11 @@ todoRouter.get('/', (req, res) => {
         }
         res.status(200).json(results.rows)
 })
-})
+})*/
+
+todoRouter.post('/create', auth, postTask)
+
+/*
 todoRouter.post('/create', auth, (req, res,next) => {
     
     const { task } = req.body
@@ -31,8 +37,11 @@ todoRouter.post('/create', auth, (req, res,next) => {
         }
         res.status(201).json({id: result.rows[0].id, description: task.description})
 })
-})
+})*/
 
+todoRouter.delete('/delete/:id', auth, deleteTask)
+
+/*
 todoRouter.delete('/delete/:id', (req, res,next) => {
     
     const { id } = req.params
@@ -52,5 +61,5 @@ todoRouter.delete('/delete/:id', (req, res,next) => {
             return res.status(200).json({id:id})
         }
     )
-})
+}) */
 export default todoRouter;
